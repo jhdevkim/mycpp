@@ -19,3 +19,67 @@ int yy;
 Month mm;
 char dd;
 };
+
+C.8 Use class rather than struct if any member is non-public
+Example
+struct Date { // BAD
+    int d, m;
+
+    Date(int i, Month m);
+    // ... lots of functions ...
+private:
+    int y;  // year
+};
+
+NL.16: Use a conventional class member declaration order
+Use the public before protected before private order.
+Example
+class X {
+public:
+    // interface
+protected:
+    // unchecked function for use by derived class implementations
+private:
+    // implementation details
+    // 1. type: classes, enums, and aliases (using)
+    // 2. constructors, assignments, destructor
+    // 3. function
+    // 4. data
+};
+
+C.9: Minimize exposure of members
+an arbitrary user can arbitrarily and independently change classes member variables.
+We need to make them private and enforce that relation (invariant) through constructors and member functions.
+class Distance {
+public:
+    // ...
+    double meters() const { return magnitude*unit; }
+    void set_unit(double u)
+    {
+            // ... check that u is a factor of 10 ...
+            // ... change magnitude appropriately ...
+            unit = u;
+    }
+    // ...
+private:
+    double magnitude;
+    double unit;    // 1 is meters, 1000 is kilometers, 0.0001 is millimeters, etc.
+};
+
+C.133: Avoid protected data
+Protected data is a source of complexity and errors. 
+Protected data complicates the statement of invariants. 
+However, protected member function can be just fine.
+Example
+class Shape {
+public:
+    // ... interface functions ...
+protected:
+    // BAD: data for use in derived classes:
+    Color fill_color;
+    Color edge_color;
+    Style st;
+};
+
+
+
