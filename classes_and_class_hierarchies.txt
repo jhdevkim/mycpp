@@ -1,0 +1,21 @@
+C.1 Organize related data into structures (classes or structs)
+Example
+void draw(int x, int y, int x2, int y2); // BAD
+void draw(Point from, Point to); // BETTER
+
+C.2 Use class if the class has the invaraint,
+Use struct if the data member can vary independently
+Example
+struct Pair {
+string name;
+int volume;
+};
+class Date {
+public:
+Date(int yy, Month mm, char dd);
+...
+private:
+int yy;
+Month mm;
+char dd;
+};
